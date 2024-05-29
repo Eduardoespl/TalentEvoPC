@@ -1,0 +1,23 @@
+.completed-courses-card{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    background-color: rgb(86, 212, 86);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.completed-courses-card h3{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.completed-courses-card p{
+    font-size: 4rem;
+    font-weight: 900;
+    color: #da2c2c;
+}
