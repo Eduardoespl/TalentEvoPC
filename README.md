@@ -14,7 +14,7 @@ TalentEvo es un sistema de entrenamiento corporativo integrado donde los emplead
 
 1. Clona este repositorio:
     ```bash
-    git clone https://github.com/tu-usuario/talentevo.git
+    git clone https://github.com/Eduardoespl/TalentEvoPC
     cd talentevo
     ```
 
@@ -38,7 +38,7 @@ TalentEvo es un sistema de entrenamiento corporativo integrado donde los emplead
     npm run dev
     ```
 
-5. Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+5. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
 
 ### Despliegue en Vercel
 
