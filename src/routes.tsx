@@ -1,6 +1,5 @@
 import Login from "./Login";
-import Register from "./Register";
-import Dashboard from "./Dashboard";
+import Default from "./Default";
 
 const routes = [
     {
@@ -8,13 +7,9 @@ const routes = [
         element: <Login />,
     },
     {
-        path: "/register",
-        element: <Register />,
+        path: "/main",
+        element: <Default />,
     },
-    {
-        path: "/dashboard",
-        element: <Dashboard />,
-    }
 ];
 
 export default routes;

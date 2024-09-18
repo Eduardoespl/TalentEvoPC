@@ -1,29 +1,11 @@
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebase/config'; // Importa solo lo que necesitas
-import './styles/App.css';
-import image from './assets/office.jpg';
+import './styles/login.css';
 import { useNavigate } from 'react-router-dom'; // Corrige el import de react-router-dom
 
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log('Inicio de sesión exitoso');
-      navigate('/dashboard'); // Navega al dashboard
-    } catch (error: any) {
-      setError(error.message || "Error al iniciar sesión");
-    }
-  };
-
-  const handleLink = () => {
-    navigate('/register');
+  const acceder = () => {
+    navigate('/main');
   }
 
   return (
@@ -32,30 +14,22 @@ function Login() {
         Talent<span className='title title-contrast'>Evo</span>
       </h1>
       <div className='login'>
-        <form onSubmit={handleLogin}>
-          <p>Correo electrónico</p>
+        <div className='form'>
+          <p>Usuario</p>
           <input
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type='text'
             id='email'
             name='email'
-            placeholder='Correo electrónico'
           />
           <p>Contraseña</p>
           <input
             type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             id='password'
             name='password'
-            placeholder='Contraseña'
           />
-          <button type='submit'>Iniciar sesión</button>
-          {error && <p>{error}</p>}
-        </form>
-        <div className='image-container'>
-          <img src={image} alt='office' />
+          <div>
+            <button onClick={acceder}>Acceder</button>
+          </div>
         </div>
       </div>
     </div>
