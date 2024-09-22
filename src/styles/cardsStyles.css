@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    width: 300px;
+    height: 130px;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #29282F;
+    box-shadow: 10px 10px 5px rgba(255, 255, 255, 0.10);
+}
+
+.container h1{
+    margin: 0;
+    color: #14E8EB;
+    font-size: 65px;
+}
+
+.container p{
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

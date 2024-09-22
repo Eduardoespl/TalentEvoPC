@@ -1,9 +1,7 @@
-// components/CoursesChart.tsx
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 import useCoursesData from '../hooks/useCoursesData';
-import '../styles/dashboardStyles.css';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -36,12 +34,26 @@ const CoursesChart: React.FC = () => {
         ],
     };
 
-    console.log('Chart data:', data); // Verificar los datos del gráfico
+    console.log('Chart data:', data); 
     return (
-        <div className="courses-chart">
+        <div style={styles.coursesChart}>
             <Line data={data} />
         </div>
     );
+};
+
+const styles = {
+    coursesChart: {
+        display: 'flex',
+        flexDirection: 'row' as 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '60rem',
+        height: 'auto',
+        backgroundColor: '#fff',
+        borderRadius: '10px',
+        padding: '1rem',
+    }
 };
 
 export default CoursesChart;
