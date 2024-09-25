@@ -1,4 +1,11 @@
+import useCompletedCourses from '../hooks/useCompletedCourses';
+
 const CompletedCourses = () => {
+    const { completedCourses } = useCompletedCourses();
+
+    function calculatePercentage(completedCourses: number) {
+        return ((completedCourses / 10) * 100).toFixed(0);
+    }
 
     return (
         <div style={styles.cardContainer}>
@@ -6,7 +13,7 @@ const CompletedCourses = () => {
                 <h2 style={styles.title}>Courses completed this month</h2>
             </div>
             <div style={styles.wheelContainer}>
-                <p style={styles.text}>45%</p>
+                <p style={styles.text}>{calculatePercentage(completedCourses)} %</p>
             </div>
         </div>
     );
@@ -35,7 +42,7 @@ const styles: { [key: string]: CSSProperties } = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '10%',
+        width: '15%',
         height: '100%',
     },
     text: {
@@ -43,6 +50,11 @@ const styles: { [key: string]: CSSProperties } = {
         fontSize: '35px',
         fontFamily: 'Montserrat, sans-serif',
         fontWeight: 'bold',
+        justifyContent: 'center',
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     textContainer: {
         display: 'flex',

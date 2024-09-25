@@ -36,11 +36,11 @@ const Default = () => {
         </div>
       </div>
       <div className="tab-container">
-        {/* <Dashbord /> */}
+        <Dashbord />
         {/* <EmployeeList /> */}
         {/* <Vacancies /> */}
         {/* <CourseVideo courseId='DkS5F29a5nVkyYhOEx5Z' classId='y9xDcRWBiyTkP4V3nQtW' /> */}
-        <CoursesScreen />
+        {/* <CoursesScreen /> */}
       </div>
     </div>
   );
