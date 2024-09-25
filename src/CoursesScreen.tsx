@@ -8,6 +8,7 @@ const CoursesScreen = () => {
         titulo: string;
         url: string;
         lessons: number;
+        show: boolean;
     }
 
     const [courses, setCourses] = useState<Course[]>([]);
@@ -23,10 +24,10 @@ const CoursesScreen = () => {
                         titulo: data.titulo,
                         url: data.img,
                         lessons: data.lessons,
+                        show: data.show,
                     } as Course;
                 });
                 setCourses(coursesData);
-                console.log(coursesData);
             } catch (error) {
                 console.error('Error al obtener los cursos:', error);
             }
@@ -40,12 +41,14 @@ const CoursesScreen = () => {
             <h1 style={styles.title}>Cursos</h1>
             <div style={styles.coursesContainer}>
                 {courses.map((course, index) => (
+                    course.show === true ? (
                     <CourseCard
                         key={index} // Asegúrate de proporcionar una key única
                         titulo={course.titulo}
                         url={course.url}
                         lessons={course.lessons}
                     />
+                    ) : null
                 ))}
             </div>
         </div>

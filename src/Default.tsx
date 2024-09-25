@@ -38,9 +38,9 @@ const Default = () => {
       <div className="tab-container">
         {/* <Dashbord /> */}
         {/* <EmployeeList /> */}
-        <Vacancies />
+        {/* <Vacancies /> */}
         {/* <CourseVideo courseId='DkS5F29a5nVkyYhOEx5Z' classId='y9xDcRWBiyTkP4V3nQtW' /> */}
-        {/* <CoursesScreen /> */}
+        <CoursesScreen />
       </div>
     </div>
   );

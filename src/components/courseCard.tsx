@@ -64,6 +64,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         alignItems: 'center',
         flexDirection: 'row',
         marginTop: '10px',
+        gap: '10px',
     },
     courseDataContainer:{
         marginLeft: '15px',
