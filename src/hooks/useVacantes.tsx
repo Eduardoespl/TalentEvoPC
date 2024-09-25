@@ -6,8 +6,6 @@ import {db} from '../firebase/config';
 interface Vacante {
   id: string;
   titulo: string;
-  descripcion: string;
-  skills: string;
   // Otros campos según la estructura de tu colección 'vacantes'
 }
 

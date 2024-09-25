@@ -1,6 +1,9 @@
 import Dashbord from './Dashboard';
-import './styles/navStyles.css';
+import Vacancies from './Vacancies';
 import EmployeeList from './components/employeeList';
+import CourseVideo from './Courses';
+import CoursesScreen from './CoursesScreen';
+import './styles/navStyles.css';
 import { FaHome, FaUserFriends, FaSignOutAlt, FaBriefcase, FaPhotoVideo} from 'react-icons/fa';
 
 const Default = () => {
@@ -34,7 +37,10 @@ const Default = () => {
       </div>
       <div className="tab-container">
         {/* <Dashbord /> */}
-        <EmployeeList />
+        {/* <EmployeeList /> */}
+        <Vacancies />
+        {/* <CourseVideo courseId='DkS5F29a5nVkyYhOEx5Z' classId='y9xDcRWBiyTkP4V3nQtW' /> */}
+        {/* <CoursesScreen /> */}
       </div>
     </div>
   );

@@ -65,7 +65,7 @@
 }
 
 .edit:hover{
-    color: #3ab5ee;
+    color: #1a5069;
     cursor: pointer;
     opacity: 1;
     transition: 0.3s;
@@ -93,4 +93,9 @@
     margin-left: 74%;
     border: none;
     cursor: pointer;
+}
+
+/*Lo hizo nati*/
+.add-button:hover{
+    background-color: #e1672f;
 }

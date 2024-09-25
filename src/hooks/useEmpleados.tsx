@@ -1,4 +1,3 @@
-// hooks/useVacantes.ts
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import {db} from '../firebase/config';
@@ -8,10 +7,12 @@ interface Empleado {
   nombre: string;
   apellido: string;
   posicion: string;
+  phone: number;
+  user: string;
   // Otros campos según la estructura de tu colección 'vacantes'
 }
 
-const useVacantes = () => {
+const useEmpleados = () => {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,4 +38,4 @@ const useVacantes = () => {
   return { empleados, loading };
 };
 
-export default useVacantes;
+export default useEmpleados;

@@ -16,10 +16,6 @@ const EmployeeList = () => {
             </div>
             <div className="list-container">
                 <EmployeeCard />
-                <EmployeeCard />
-                <EmployeeCard />
-                <EmployeeCard />
-                <EmployeeCard />
             </div>
         </>
     )
