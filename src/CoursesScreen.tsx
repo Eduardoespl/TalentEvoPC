@@ -62,7 +62,6 @@ const styles: { [key: string]: CSSProperties } = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '20px',
     },
     title: {
         fontSize: '2rem',

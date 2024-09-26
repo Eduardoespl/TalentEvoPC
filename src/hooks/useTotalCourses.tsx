@@ -10,7 +10,7 @@ const useTotalCourses = () => {
         const fetchTotalCourses = async () => {
             setLoading(true);
             try {
-                const q = query(collection(db, 'empleados'));
+                const q = query(collection(db, 'cursos'));
                 const querySnapshot = await getDocs(q);
                 setTotalCourses(querySnapshot.size);
             } catch (error) {

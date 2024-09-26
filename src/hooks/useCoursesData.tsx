@@ -4,8 +4,8 @@ import { db } from '../firebase/config'; // Importa la instancia de Firestore y 
 
 interface Course {
   id: string;
-  titulo: string;
-  times: number;
+  mes: string;
+  total: number;
 }
 
 const useCoursesData = () => {
@@ -16,13 +16,13 @@ const useCoursesData = () => {
     const fetchCoursesData = async () => {
       setLoading(true);
       try {
-        const querySnapshot = await getDocs(collection(db, 'cursos'));
+        const querySnapshot = await getDocs(collection(db, 'completos'));
         const coursesData = querySnapshot.docs.map(doc => {
           const data = doc.data();
           return {
             id: doc.id,
-            titulo: data.titulo,
-            times: data.times,
+            mes: data.mes,
+            total: data.total,
           } as Course;
         });
         setCourses(coursesData);

@@ -16,8 +16,8 @@ const CoursesChart: React.FC = () => {
         return <p>No data available</p>;
     }
 
-    const labels = courses.map(course => course.titulo);
-    const dataValues = courses.map(course => course.times);
+    const labels = courses.map(course => course.mes);
+    const dataValues = courses.map(course => course.total);
 
     const data = {
         type: 'line',

@@ -4,13 +4,13 @@ const CompletedCourses = () => {
     const { completedCourses } = useCompletedCourses();
 
     function calculatePercentage(completedCourses: number) {
-        return ((completedCourses / 10) * 100).toFixed(0);
+        return ((completedCourses / 7) * 100).toFixed(0);
     }
 
     return (
         <div style={styles.cardContainer}>
             <div style={styles.textContainer}>
-                <h2 style={styles.title}>Courses completed this month</h2>
+                <h2 style={styles.title}>Cursos completos este mes</h2>
             </div>
             <div style={styles.wheelContainer}>
                 <p style={styles.text}>{calculatePercentage(completedCourses)} %</p>

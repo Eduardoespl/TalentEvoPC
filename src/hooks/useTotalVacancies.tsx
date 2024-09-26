@@ -10,7 +10,7 @@ const useTotalVacancies = () => {
         const fetchTotalVacancies = async () => {
             setLoading(true);
             try {
-                const q = query(collection(db, 'empleados'));
+                const q = query(collection(db, 'vacantes'));
                 const querySnapshot = await getDocs(q);
                 setTotalVacancies(querySnapshot.size);
             } catch (error) {

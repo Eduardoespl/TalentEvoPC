@@ -1,10 +1,6 @@
-import Dashbord from './Dashboard';
-import Vacancies from './Vacancies';
-import EmployeeList from './components/employeeList';
-import CourseVideo from './Courses';
-import CoursesScreen from './CoursesScreen';
+import { Outlet, NavLink } from 'react-router-dom';
+import { FaHome, FaUserFriends, FaBriefcase, FaPhotoVideo, FaSignOutAlt } from 'react-icons/fa';
 import './styles/navStyles.css';
-import { FaHome, FaUserFriends, FaSignOutAlt, FaBriefcase, FaPhotoVideo} from 'react-icons/fa';
 
 const Default = () => {
   return (
@@ -13,34 +9,51 @@ const Default = () => {
         <h1>Talent<span>Evo</span></h1>
         <div className="nav">
           <ul>
-            <li className="card selected">
-              <FaHome/>
-              <a href="#">Dashboard</a>
+            <li className="card">
+              <NavLink
+                to="dashboard"
+                className={({ isActive }) => (isActive ? 'active' : 'card')}
+              >
+                <FaHome />
+                <p>Dashboard</p>
+              </NavLink>
             </li>
             <li className="card">
-              <FaUserFriends/>
-              <a href="#">Employees</a>
+              <NavLink
+                to="employees"
+                className={({ isActive }) => (isActive ? 'active' : 'card')}
+              >
+                <FaUserFriends />
+                <p>Employees</p>
+              </NavLink>
             </li>
             <li className="card">
-              <FaBriefcase/>
-              <a href="#">Vacancies</a>
+
+              <NavLink
+                to="vacancies"
+                className={({ isActive }) => (isActive ? 'active' : 'card')}
+              >
+                <FaBriefcase />
+                <p>Vacancies</p>
+              </NavLink>
             </li>
             <li className="card">
-              <FaPhotoVideo/>
-              <a href="#">Courses</a>
+              <NavLink
+                to="coursesScreen"
+                className={({ isActive }) => (isActive ? 'active' : 'card')}
+              >
+                <FaPhotoVideo />
+                <p>Courses</p>
+              </NavLink>
             </li>
           </ul>
         </div>
         <div className="logout-button">
-          <button><FaSignOutAlt color='black'/> Log out</button>
+          <button><FaSignOutAlt color='black' /> Log out</button>
         </div>
       </div>
       <div className="tab-container">
-        <Dashbord />
-        {/* <EmployeeList /> */}
-        {/* <Vacancies /> */}
-        {/* <CourseVideo courseId='DkS5F29a5nVkyYhOEx5Z' classId='y9xDcRWBiyTkP4V3nQtW' /> */}
-        {/* <CoursesScreen /> */}
+        <Outlet /> {/* Aquí se mostrarán las rutas hijas */}
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
-import { useNavigate } from 'react-router-dom'; // Corrige el import de react-router-dom
+import { useState } from 'react';
+import useAuth from './hooks/useAuth'; // Asegúrate de importar el hook
 
 function Login() {
-  const navigate = useNavigate();
+  const { login, error, loading } = useAuth();
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
 
-  const acceder = () => {
-    navigate('/main');
+  const handleLogin = () => {
+    login(user, password);
   }
 
   return (
@@ -17,9 +20,11 @@ function Login() {
           <p style={styles.p}>Usuario</p>
           <input
             type='text'
-            id='email'
-            name='email'
+            id='user'
+            name='user'
             style={styles.input}
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
           />
           <p style={styles.p}>Contraseña</p>
           <input
@@ -27,10 +32,15 @@ function Login() {
             id='password'
             name='password'
             style={styles.input}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <div>
-            <button style={styles.button} onClick={acceder}>Acceder</button>
+            <button style={styles.button} onClick={handleLogin} disabled={loading}>
+              {loading ? 'Cargando...' : 'Acceder'}
+            </button>
           </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
       </div>
     </div>
