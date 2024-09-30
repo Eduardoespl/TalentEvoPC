@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { RiStackLine } from "react-icons/ri";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { db } from "../firebase/config"; // Asegúrate de ajustar la ruta según tu estructura
-import { auth } from "../firebase/config"; // Importa la autenticación para obtener el usuario actual
+import { db, auth } from "../firebase/config"; // Importa la autenticación para obtener el usuario actual
 
 interface CourseCardProps {
     id: string; // ID del curso
@@ -11,38 +10,40 @@ interface CourseCardProps {
     lessons: number;
     show: boolean;
     isAdmin: boolean;
-    subscribedUsers?: string[]; // Hacemos opcional este prop
+    subscribedUsers?: string[];
     onToggleShow: () => void;
+    onSubscribeChange: (id: string, isSubscribed: boolean) => void; // Nueva prop para manejar el cambio de suscripción
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({ id, titulo, url, lessons, show, isAdmin, subscribedUsers = [], onToggleShow }) => {
-    const [isSubscribed, setIsSubscribed] = useState(subscribedUsers.includes(auth.currentUser?.uid || "")); // Verifica si el usuario está suscrito inicialmente
+const CourseCard: React.FC<CourseCardProps> = ({ id, titulo, url, lessons, show, isAdmin, subscribedUsers = [], onToggleShow, onSubscribeChange }) => {
+    const [isSubscribed, setIsSubscribed] = useState(subscribedUsers.includes(auth.currentUser?.uid || ""));
 
     const handleSubscribeToggle = async () => {
         const userId = auth.currentUser?.uid;
 
+        // Verifica si hay un usuario autenticado
         if (!userId) {
-            console.error("No se ha encontrado un usuario autenticado.");
+            alert("Por favor, inicia sesión para suscribirte a este curso.");
             return;
         }
 
-        const courseRef = doc(db, "cursos", id); // Referencia al documento del curso
+        const courseRef = doc(db, "cursos", id);
 
         try {
             if (isSubscribed) {
-                // Si está suscrito, eliminar del array
                 await updateDoc(courseRef, {
                     subscribed: arrayRemove(userId),
                 });
                 console.log("Usuario eliminado de la suscripción");
+                onSubscribeChange(id, false); // Actualiza la lista de cursos
             } else {
-                // Si no está suscrito, agregar al array
                 await updateDoc(courseRef, {
                     subscribed: arrayUnion(userId),
                 });
                 console.log("Usuario añadido a la suscripción");
+                onSubscribeChange(id, true); // Actualiza la lista de cursos
             }
-            setIsSubscribed(!isSubscribed); // Cambiar el estado local de suscripción
+            setIsSubscribed(!isSubscribed);
         } catch (error) {
             console.error("Error al actualizar la suscripción:", error);
         }
@@ -73,6 +74,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, titulo, url, lessons, show,
     );
 };
 
+// Estilos se mantienen igual
 const styles: { [key: string]: React.CSSProperties } = {
     mainContainer: {
         backgroundColor: "#D9D9D9",

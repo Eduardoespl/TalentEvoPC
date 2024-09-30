@@ -1,6 +1,8 @@
+// addEmployeeModal.tsx
 import { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import '../styles/modalStyles.css';
 
 const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
@@ -12,24 +14,31 @@ const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Generar el correo electrónico
+        const email = `${nombre.charAt(0).toLowerCase()}${apellido.toLowerCase()}@talentevo.com`;
+        const password = '123456';
+        
+        // Generar el user con la primera letra del nombre y el apellido
         const user = `${nombre.charAt(0)}${apellido}`.toLowerCase();
 
-        const nuevoEmpleado = {
-            nombre,
-            apellido,
-            posicion,
-            phone,
-            user
-        };
-
         try {
-            await addDoc(collection(db, 'empleados'), nuevoEmpleado);
+            // Crear el usuario en Firebase Authentication
+            const auth = getAuth();
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const uid = userCredential.user.uid; // Obtener el UID del usuario creado
 
-            await addDoc(collection(db, 'users'), {
-                user,
-                password: '123',
-                admin: isAdmin
-            });
+            // Agregar el nuevo empleado a la colección 'empleados'
+            const nuevoEmpleado = {
+                nombre,
+                apellido,
+                posicion,
+                phone,
+                user, // Almacenar el user en el documento del empleado
+                isAdmin, // Almacenar si es admin
+                uid // Almacenar el UID del usuario
+            };
+            await addDoc(collection(db, 'empleados'), nuevoEmpleado);
 
             alert('Empleado agregado exitosamente');
             onClose();
@@ -47,7 +56,7 @@ const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
                 <form onSubmit={handleSubmit}>
                     <label>
                         Nombre:
-                        <br></br> 
+                        <br />
                         <input
                             type="text"
                             value={nombre}
@@ -57,7 +66,7 @@ const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
                     </label>
                     <label>
                         Apellido:
-                        <br></br>
+                        <br />
                         <input
                             type="text"
                             value={apellido}
@@ -67,7 +76,7 @@ const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
                     </label>
                     <label>
                         Ocupación:
-                        <br></br>
+                        <br />
                         <input
                             type="text"
                             value={posicion}
@@ -77,7 +86,7 @@ const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
                     </label>
                     <label>
                         Teléfono:
-                        <br></br>
+                        <br />
                         <input
                             type="tel"
                             value={phone}

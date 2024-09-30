@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "./firebase/config";
 import CourseCard from "./components/courseCard";
 
-const CoursesEmployee = () => {
+const CoursesScreen = () => {
     const [courses, setCourses] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchCourses = async () => {
             const coursesCollection = collection(db, "cursos");
-            const q = query(coursesCollection, where("show", "==", true));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(coursesCollection);
             const coursesList = querySnapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
@@ -20,20 +19,29 @@ const CoursesEmployee = () => {
         fetchCourses();
     }, []);
 
+    const toggleShow = async (courseId: string, currentShow: boolean) => {
+        const courseRef = doc(db, "cursos", courseId);
+        await updateDoc(courseRef, {
+            show: !currentShow,
+        });
+        setCourses(courses.map(course => course.id === courseId ? { ...course, show: !currentShow } : course));
+    };
+
     return (
         <div>
-            <h1>Mis Cursos</h1>
+            <h1>Admin - Cursos</h1>
             <div>
                 {courses.map((course) => (
                     <CourseCard
                         key={course.id}
-                        id={course.id} // Asegúrate de pasar el ID
+                        id={course.id}
                         titulo={course.title}
                         url={course.img}
                         lessons={course.lessons}
                         show={course.show}
-                        isAdmin={false} // Cambia a true si el usuario es administrador
-                        onToggleShow={() => {}} // Callback vacío si no es admin
+                        isAdmin={true} // Administradores pueden ver el botón
+                        onToggleShow={() => toggleShow(course.id, course.show)}
+                        onSubscribeChange={() => { /* Add your handler logic here */ }}
                     />
                 ))}
             </div>
@@ -41,4 +49,4 @@ const CoursesEmployee = () => {
     );
 };
 
-export default CoursesEmployee;
+export default CoursesScreen;
