@@ -28,7 +28,6 @@ const Default = () => {
               </NavLink>
             </li>
             <li className="card">
-
               <NavLink
                 to="vacancies"
                 className={({ isActive }) => (isActive ? 'active' : 'card')}
@@ -53,7 +52,7 @@ const Default = () => {
         </div>
       </div>
       <div className="tab-container">
-        <Outlet /> {/* Aquí se mostrarán las rutas hijas */}
+        <Outlet />
       </div>
     </div>
   );

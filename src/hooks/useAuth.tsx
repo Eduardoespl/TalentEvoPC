@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../firebase/config';  // Asegúrate de importar correctamente la configuración de Firebase
+import { db } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
@@ -25,9 +25,15 @@ const useAuth = () => {
 
             const userData = querySnapshot.docs[0].data();
 
+            // Guardar la información del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify({
+                user: userData.user,
+                admin: userData.admin,
+            }));
+
             // Si el usuario es administrador
             if (userData.admin) {
-                navigate('/main');
+                navigate('/main/dashboard');
             } else {
                 // Si el usuario es normal
                 navigate('/courses');

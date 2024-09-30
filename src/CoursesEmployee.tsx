@@ -33,7 +33,7 @@ const CoursesEmployee = () => {
                         lessons={course.lessons}
                         show={course.show}
                         isAdmin={false} // Cambia a true si el usuario es administrador
-                        onToggleShow={() => {}} // Callback vacío si no es admin
+                        onToggleShow={() => { }} // Callback vacío si no es admin
                     />
                 ))}
             </div>

@@ -5,6 +5,7 @@ import Vacancies from './Vacancies';
 import EmployeeList from './components/employeeList';
 import CoursesScreen from './CoursesScreen';
 import CourseVideo from './Courses';
+import CoursesEmployee from "./CoursesEmployee";
 
 const routes = [
     {
@@ -24,8 +25,13 @@ const routes = [
     },
     {
         path: "/courses",
+        element: <CoursesEmployee />
+    },
+    {
+        path: "/course",
         element: <CourseVideo courseId='DkS5F29a5nVkyYhOEx5Z' classId='y9xDcRWBiyTkP4V3nQtW' />
-    }
+    },
+    
 ];
 
 export default routes;
