@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom'; // Hook para obtener los parámetros de la URL
 import { doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { db } from './firebase/config'; // Asegúrate de importar tu configuración de Firebase
+import { db } from './firebase/config';
 
-interface CourseVideoProps {
-    courseId: string;
-    classId: string;
-}
-
-const CourseVideo: React.FC<CourseVideoProps> = ({ courseId, classId }) => {
+const CourseVideo: React.FC = () => {
+    const { courseId, classId } = useParams(); // Obtenemos courseId y classId de la URL
     const [courseTitle, setCourseTitle] = useState('');
     const [classTitle, setClassTitle] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
@@ -16,23 +13,29 @@ const CourseVideo: React.FC<CourseVideoProps> = ({ courseId, classId }) => {
     useEffect(() => {
         const fetchCourseAndClass = async () => {
             try {
-                // Obtener el título del curso
-                const courseRef = doc(db, `cursos/${courseId}`);
-                const courseSnap = await getDoc(courseRef);
-                if (courseSnap.exists()) {
-                    setCourseTitle(courseSnap.data().titulo); // Asegúrate de que el campo sea "title"
-                }
-                // Obtener el título de la clase y la URL del video
-                const classRef = doc(db, `cursos/${courseId}/clases/${classId}`);
-                const classSnap = await getDoc(classRef);
-                if (classSnap.exists()) {
-                    setClassTitle(classSnap.data().titulo); // Asegúrate de que el campo sea "title"
-                    const videoPath = classSnap.data().url; // Ruta al video en Firebase Storage
-                    // Obtener la URL de descarga del video desde Firebase Storage
-                    const storage = getStorage();
-                    const videoRef = ref(storage, videoPath);
-                    const videoUrl = await getDownloadURL(videoRef);
-                    setVideoUrl(videoUrl);
+                if (courseId && classId) {
+                    // Obtenemos el título del curso
+                    const courseRef = doc(db, `cursos/${courseId}`);
+                    const courseSnap = await getDoc(courseRef);
+                    if (courseSnap.exists()) {
+                        setCourseTitle(courseSnap.data().titulo); // Ajusta el campo según tu estructura
+                    }
+                    
+                    // Obtenemos la clase de la subcolección 'clases'
+                    const classRef = doc(db, `cursos/${courseId}/clases/${classId}`);
+                    const classSnap = await getDoc(classRef);
+                    if (classSnap.exists()) {
+                        setClassTitle(classSnap.data().titulo); // Ajusta el campo según tu estructura
+                        const videoPath = classSnap.data().url;  // Supongo que tienes un campo 'url' en la clase
+                        
+                        // Obtenemos la URL del video desde Firebase Storage
+                        const storage = getStorage();
+                        const videoRef = ref(storage, videoPath);
+                        const videoUrl = await getDownloadURL(videoRef);
+                        setVideoUrl(videoUrl);
+                    } else {
+                        console.error('No se encontró la clase');
+                    }
                 }
             } catch (error) {
                 console.error('Error al obtener los datos:', error);

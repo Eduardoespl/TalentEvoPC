@@ -28,8 +28,8 @@ const routes = [
         element: <CoursesEmployee />
     },
     {
-        path: "/course",
-        element: <CourseVideo courseId='DkS5F29a5nVkyYhOEx5Z' classId='y9xDcRWBiyTkP4V3nQtW' />
+        path: "/course/:courseId/:classId",
+        element: <CourseVideo />
     },
     
 ];

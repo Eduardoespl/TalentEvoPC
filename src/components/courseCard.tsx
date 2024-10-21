@@ -2,21 +2,30 @@ import React, { useState } from "react";
 import { RiStackLine } from "react-icons/ri";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db, auth } from "../firebase/config"; // Importa la autenticación para obtener el usuario actual
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 interface CourseCardProps {
-    id: string; // ID del curso
+    id: string;
     titulo: string;
+    classId?: string;
     url: string;
     lessons: number;
     show: boolean;
     isAdmin: boolean;
     subscribedUsers?: string[];
     onToggleShow: () => void;
-    onSubscribeChange: (id: string, isSubscribed: boolean) => void; // Nueva prop para manejar el cambio de suscripción
+    onSubscribeChange: (id: string, isSubscribed: boolean) => void;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({ id, titulo, url, lessons, show, isAdmin, subscribedUsers = [], onToggleShow, onSubscribeChange }) => {
+const CourseCard: React.FC<CourseCardProps> = ({ id, classId, titulo, url, lessons, show, isAdmin, subscribedUsers = [], onToggleShow, onSubscribeChange }) => {
+    const navigate = useNavigate();
     const [isSubscribed, setIsSubscribed] = useState(subscribedUsers.includes(auth.currentUser?.uid || ""));
+
+    const navigateToCourse = async () => {
+        console.log("Course ID:", id, "Class ID:", "1");
+        navigate(`/course/${id}/${classId}`);
+    };
 
     const handleSubscribeToggle = async () => {
         const userId = auth.currentUser?.uid;
@@ -50,7 +59,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, titulo, url, lessons, show,
     };
 
     return (
-        <div style={styles.mainContainer}>
+        <div style={styles.mainContainer} onClick={navigateToCourse}>
             <div style={styles.imageContainer}>
                 <img src={url} alt="course image" style={styles.image as React.CSSProperties} />
             </div>
@@ -59,16 +68,16 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, titulo, url, lessons, show,
                 <div style={styles.lessonsContainer}>
                     <RiStackLine color="#FF4173" size={35} />
                     <p style={styles.lessons}> {lessons} lecciones</p>
+                    {isAdmin ? (
+                        <button onClick={onToggleShow} style={styles.button}>
+                            {show ? <FaMinus size={25}/> : <FaPlus size={25}/>}
+                        </button>
+                    ) : (
+                        <button onClick={handleSubscribeToggle} style={styles.button}>
+                            {isSubscribed ? <FaMinus size={25}/> : <FaPlus size={25}/>}
+                        </button>
+                    )}
                 </div>
-                {isAdmin ? (
-                    <button onClick={onToggleShow}>
-                        {show ? "Quitar" : "Agregar"}
-                    </button>
-                ) : (
-                    <button onClick={handleSubscribeToggle}>
-                        {isSubscribed ? "Desuscribir" : "Suscribir"}
-                    </button>
-                )}
             </div>
         </div>
     );
@@ -85,6 +94,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        cursor: "pointer",
     },
     imageContainer: {
         width: "259px",
@@ -108,6 +118,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         fontFamily: "Montserrat, sans-serif",
         fontWeight: "500",
         fontSize: "20px",
+        marginRight: "50px",
     },
     lessonsContainer: {
         display: "flex",
@@ -119,6 +130,18 @@ const styles: { [key: string]: React.CSSProperties } = {
     courseDataContainer: {
         marginLeft: "15px",
     },
+    button: {
+        backgroundColor: "#FF824A",
+        color: "#fff",
+        border: "none",
+        borderRadius: "50px",
+        width: "44px",
+        height: "44px",
+        cursor: "pointer",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    }
 };
 
 export default CourseCard;

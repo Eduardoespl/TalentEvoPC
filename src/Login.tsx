@@ -8,7 +8,7 @@ function Login() {
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
-        await login(user, password); // Espera la resolución de la promesa
+        await login(user+"@talentevo.com", password); // Espera la resolución de la promesa
     };
 
     return (
@@ -41,7 +41,7 @@ function Login() {
                             {loading ? 'Cargando...' : 'Acceder'}
                         </button>
                     </div>
-                    {error && <p style={{ color: 'red' }}>{error}</p>} {/* Muestra el error */}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                 </div>
             </div>
         </div>

@@ -29,13 +29,13 @@ const CoursesScreen = () => {
 
     return (
         <div>
-            <h1>Admin - Cursos</h1>
-            <div>
+            <h1>Cursos</h1>
+            <div style={styles.mainContainer}>
                 {courses.map((course) => (
                     <CourseCard
                         key={course.id}
                         id={course.id}
-                        titulo={course.title}
+                        titulo={course.titulo}
                         url={course.img}
                         lessons={course.lessons}
                         show={course.show}
@@ -47,6 +47,15 @@ const CoursesScreen = () => {
             </div>
         </div>
     );
+};
+
+const styles: { [key: string]: React.CSSProperties } = {
+    mainContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+    },
 };
 
 export default CoursesScreen;
