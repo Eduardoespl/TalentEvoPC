@@ -1,54 +1,99 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Hook para obtener los parámetros de la URL
-import { doc, getDoc } from 'firebase/firestore';
+import { useParams, useNavigate } from 'react-router-dom';
+import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { db } from './firebase/config';
+import { FaHome } from "react-icons/fa";
+import LessonCard from './components/lessonCard';
+
+interface Lesson {
+    id: string;
+    titulo: string;
+    url: string;
+}
 
 const CourseVideo: React.FC = () => {
-    const { courseId, classId } = useParams(); // Obtenemos courseId y classId de la URL
+    const { courseId, classId } = useParams();
     const [courseTitle, setCourseTitle] = useState('');
     const [classTitle, setClassTitle] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
+    const [lessons, setLessons] = useState<Lesson[]>([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchCourseAndClass = async () => {
+        const fetchCourseData = async () => {
             try {
-                if (courseId && classId) {
-                    // Obtenemos el título del curso
+                if (courseId) {
                     const courseRef = doc(db, `cursos/${courseId}`);
                     const courseSnap = await getDoc(courseRef);
                     if (courseSnap.exists()) {
-                        setCourseTitle(courseSnap.data().titulo); // Ajusta el campo según tu estructura
+                        setCourseTitle(courseSnap.data().titulo);
                     }
-                    
-                    // Obtenemos la clase de la subcolección 'clases'
-                    const classRef = doc(db, `cursos/${courseId}/clases/${classId}`);
-                    const classSnap = await getDoc(classRef);
-                    if (classSnap.exists()) {
-                        setClassTitle(classSnap.data().titulo); // Ajusta el campo según tu estructura
-                        const videoPath = classSnap.data().url;  // Supongo que tienes un campo 'url' en la clase
-                        
-                        // Obtenemos la URL del video desde Firebase Storage
-                        const storage = getStorage();
-                        const videoRef = ref(storage, videoPath);
-                        const videoUrl = await getDownloadURL(videoRef);
-                        setVideoUrl(videoUrl);
-                    } else {
-                        console.error('No se encontró la clase');
-                    }
+
+                    const lessonsRef = collection(db, `cursos/${courseId}/clases`);
+                    const lessonsSnap = await getDocs(lessonsRef);
+                    const fetchedLessons: Lesson[] = lessonsSnap.docs.map(doc => ({
+                        id: doc.id,
+                        titulo: doc.data().titulo,
+                        url: doc.data().url,
+                    }));
+                    setLessons(fetchedLessons);
                 }
             } catch (error) {
                 console.error('Error al obtener los datos:', error);
             }
         };
 
-        fetchCourseAndClass();
+        fetchCourseData();
+    }, [courseId]);
+
+    useEffect(() => {
+        const fetchVideoUrl = async () => {
+            if (courseId && classId) {
+                try {
+                    setVideoUrl('');
+                    setClassTitle('');
+
+                    const classRef = doc(db, `cursos/${courseId}/clases/${classId}`);
+                    const classSnap = await getDoc(classRef);
+                    if (classSnap.exists()) {
+                        setClassTitle(classSnap.data().titulo);
+                        const videoPath = classSnap.data().url;
+                        const storage = getStorage();
+                        const videoRef = ref(storage, videoPath);
+                        const videoUrl = await getDownloadURL(videoRef);
+                        setVideoUrl(videoUrl);
+                    }
+                } catch (error) {
+                    console.error('Error al obtener el video:', error);
+                }
+            }
+        };
+
+        fetchVideoUrl();
     }, [courseId, classId]);
+
+    const handleGoHome = () => {
+        navigate('/courses');
+    };
+
+    const currentIndex = lessons.findIndex(lesson => lesson.id === classId);
+
+    const handleNavigate = (direction: 'previous' | 'next') => {
+        const newIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
+        if (newIndex >= 0 && newIndex < lessons.length) {
+            const newClassId = lessons[newIndex].id;
+            navigate(`/course/${courseId}/${newClassId}`);
+        }
+    };
 
     return (
         <div>
+            <button style={{ backgroundColor: "transparent", cursor: "pointer", border: "none" }} onClick={handleGoHome}>
+                <FaHome size={30} color='white' />
+            </button>
             <h1>{courseTitle}</h1>
-            <h2 style={{color:'white'}}>{classTitle}</h2>
             {videoUrl ? (
                 <video controls width="700">
                     <source src={videoUrl} type="video/mp4" />
@@ -57,6 +102,18 @@ const CourseVideo: React.FC = () => {
             ) : (
                 <p>Cargando video...</p>
             )}
+            <h2 style={{ color: 'white' }}>{classTitle}</h2>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '200px', margin: '20px auto' }}>
+                <button onClick={() => handleNavigate('previous')} disabled={currentIndex <= 0}>Anterior</button>
+                <button onClick={() => handleNavigate('next')} disabled={currentIndex >= lessons.length - 1}>Siguiente</button>
+            </div>
+
+            <div style={{ marginTop: '20px' }}>
+                {lessons.map((lesson) => (
+                    <LessonCard key={lesson.id} id={courseId!} classID={lesson.id} title={lesson.titulo} />
+                ))}
+            </div>
         </div>
     );
 };
