@@ -59,8 +59,8 @@ const CourseCard: React.FC<CourseCardProps> = ({ id, classId, titulo, url, lesso
     };
 
     return (
-        <div style={styles.mainContainer} onClick={navigateToCourse}>
-            <div style={styles.imageContainer}>
+        <div style={styles.mainContainer} >
+            <div style={styles.imageContainer} onClick={navigateToCourse}>
                 <img src={url} alt="course image" style={styles.image as React.CSSProperties} />
             </div>
             <div style={styles.courseDataContainer}>
@@ -94,7 +94,6 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        cursor: "pointer",
     },
     imageContainer: {
         width: "259px",
@@ -102,6 +101,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         overflow: "hidden",
         margin: "auto",
         marginTop: "15px",
+        cursor: "pointer",
     },
     image: {
         width: "100%",

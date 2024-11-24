@@ -17,10 +17,12 @@ const LessonCard: React.FC<LessonCardProps> = ({ id, classID, title }) => {
 
     return (
         <div>
-            <div style={{ backgroundColor: "#29282F", width: "600px", display: "flex", justifyContent: "space-between", alignItems: "center", height: "65px", borderRadius: "8px", cursor: "pointer" }}
-                 onClick={handleClick}>
-                <h2 style={{ color: "white" }}>{title}</h2>
-                <FaPlayCircle size={30} color="#FF824A" />
+            <div style={{ backgroundColor: "#29282F", width: "600px", display: "flex", alignItems: "center", height: "65px", borderRadius: "8px", cursor: "pointer", paddingLeft:15}}
+                onClick={handleClick}>
+                <h2 style={{ color: "white", fontFamily:"sans-serif", fontSize:20 }}>{title}</h2>
+                <div style={{ display:"flex", marginLeft:"auto", marginRight:20}}>
+                    <FaPlayCircle size={30} color="#FF824A" />
+                </div>
             </div>
         </div>
     );

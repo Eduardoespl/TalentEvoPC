@@ -1,10 +1,14 @@
 import useCompletedCourses from '../hooks/useCompletedCourses';
 
-const CompletedCourses = () => {
+interface cardProps {
+    totalCourses: number;
+}
+
+const CompletedCourses = ({totalCourses}:cardProps) => {
     const { completedCourses } = useCompletedCourses();
 
     function calculatePercentage(completedCourses: number) {
-        return ((completedCourses / 7) * 100).toFixed(0);
+        return ((completedCourses / totalCourses) * 100).toFixed(0);
     }
 
     return (
@@ -26,7 +30,7 @@ const styles: { [key: string]: CSSProperties } = {
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '660px',
+        width: '1000px',
         height: '160px',
         backgroundColor: '#29282F',
         borderRadius: '8px',
@@ -34,7 +38,7 @@ const styles: { [key: string]: CSSProperties } = {
     },
     title: {
         color: 'white',
-        fontSize: '35px',
+        fontSize: '45px',
         textAlign: 'start',
         fontFamily: 'Montserrat, sans-serif',
     },
@@ -42,12 +46,12 @@ const styles: { [key: string]: CSSProperties } = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '15%',
+        width: '30%',
         height: '100%',
     },
     text: {
         color: '#14E8EB',
-        fontSize: '35px',
+        fontSize: '80px',
         fontFamily: 'Montserrat, sans-serif',
         fontWeight: 'bold',
         justifyContent: 'center',

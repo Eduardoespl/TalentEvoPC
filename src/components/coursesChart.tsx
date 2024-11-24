@@ -17,14 +17,14 @@ const CoursesChart: React.FC = () => {
     }
 
     const labels = courses.map(course => course.mes);
-    const dataValues = courses.map(course => course.total);
+    const dataValues = courses.map(course => course.meta);
 
     const data = {
         type: 'line',
         labels: labels,
         datasets: [
             {
-                label: 'Times Viewed',
+                label: 'Completed courses per month',
                 data: dataValues,
                 fill: false,
                 borderColor: 'rgba(75, 192, 192, 1)',
