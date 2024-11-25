@@ -11,7 +11,7 @@ const CompletedCourses = ({ totalCourses }: CardProps) => {
     const currentMonth = new Date().toLocaleString('es-ES', { month: 'long' });
 
     // Filtrar los cursos completados del mes actual
-    const currentMonthCourses = courses.filter(course => course.mes.toLowerCase() === currentMonth.toLowerCase());
+    const currentMonthCourses = courses.filter(course => course.mes.toLowerCase() === currentMonth);
 
     // Sumar los cursos completados en el mes actual
     const totalCompletedThisMonth = currentMonthCourses.reduce((sum, course) => sum + course.total, 0);

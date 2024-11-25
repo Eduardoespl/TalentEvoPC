@@ -17,7 +17,7 @@ const Dashboard = () => {
     const [metaCursos, setMetaCursos] = useState(0);
     const [buttonVisible, setButtonVisible] = useState(true);
 
-    const month = new Date().toLocaleString("default", { month: "long" });
+    const month = new Date().toLocaleString("es-ES", { month: "long" });
 
     // Cargar meta del mes actual desde Firestore al montar el componente
     useEffect(() => {
@@ -45,6 +45,7 @@ const Dashboard = () => {
                     setMetaCursos(value); // Actualizar estado local
                     setButtonVisible(false); // Ocultar botón después de guardar
                     alert("Meta guardada correctamente.");
+                    window.location.reload(); // Recargar la página para reflejar los cambios
                 })
                 .catch((error) => {
                     console.error("Error al guardar la meta:", error);
