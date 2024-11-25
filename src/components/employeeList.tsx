@@ -12,14 +12,14 @@ const EmployeeList = () => {
     return (
         <>
             <button className="add-button" onClick={openModal}>
-                Add Employee
+                Agregar empleado
             </button>
             <div className="list-title">
-                <p>Employee</p>
-                <p>Ocupattion</p>
-                <p>Phone</p>
-                <p>User</p>
-                <p>Manage</p>
+                <p>Empleado</p>
+                <p>Ocupación</p>
+                <p>Telefono</p>
+                <p>Usuario</p>
+                <p>Administrar</p>
             </div>
             <div className="list-container">
                 <EmployeeCard />

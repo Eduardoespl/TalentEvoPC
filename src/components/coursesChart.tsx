@@ -9,11 +9,11 @@ const CoursesChart: React.FC = () => {
     const { courses, loading } = useCoursesData();
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p>Cargando...</p>;
     }
 
     if (!courses.length) {
-        return <p>No data available</p>;
+        return <p>Sin información disponible</p>;
     }
 
     const labels = courses.map(course => course.mes);
@@ -24,7 +24,7 @@ const CoursesChart: React.FC = () => {
         labels: labels,
         datasets: [
             {
-                label: 'Courses Completed per Month',
+                label: 'Cursos completados este mes',
                 data: dataValues,
                 fill: false,
                 borderColor: 'rgba(75, 192, 192, 1)',

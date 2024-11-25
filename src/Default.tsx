@@ -29,7 +29,7 @@ const Default = () => {
                 className={({ isActive }) => (isActive ? 'active' : 'card')}
               >
                 <FaHome />
-                <p>Dashboard</p>
+                <p>Panel</p>
               </NavLink>
             </li>
             <li className="card">
@@ -38,7 +38,7 @@ const Default = () => {
                 className={({ isActive }) => (isActive ? 'active' : 'card')}
               >
                 <FaUserFriends />
-                <p>Employees</p>
+                <p>Empleados</p>
               </NavLink>
             </li>
             <li className="card">
@@ -47,7 +47,7 @@ const Default = () => {
                 className={({ isActive }) => (isActive ? 'active' : 'card')}
               >
                 <FaBriefcase />
-                <p>Vacancies</p>
+                <p>Vacantes</p>
               </NavLink>
             </li>
             <li className="card">
@@ -56,13 +56,13 @@ const Default = () => {
                 className={({ isActive }) => (isActive ? 'active' : 'card')}
               >
                 <FaPhotoVideo />
-                <p>Courses</p>
+                <p>Cursos</p>
               </NavLink>
             </li>
           </ul>
         </div>
         <div className="logout-button">
-          <button onClick={handleLogout}><FaSignOutAlt color='black' /> Log out</button>
+          <button onClick={handleLogout}><FaSignOutAlt color='black' /> Salir</button>
         </div>
       </div>
       <div className="tab-container">
