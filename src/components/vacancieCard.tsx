@@ -38,9 +38,9 @@ const VacancieCard = () => {
         <>
             {vacantes.map((vacante) => (
                 <div key={vacante.id}>
-                    <div className="employee-card" onClick={() => toggleSelectEmployee(vacante.id)}>
-                        <p className="employee-name">{vacante.titulo}</p>
-                        <div className="icon-container">
+                    <div className="employee-card" style={{display:"flex", justifyContent:"left"}} onClick={() => toggleSelectEmployee(vacante.id)}>
+                        <p className="employee-name" style={{marginLeft:30}}>{vacante.titulo}</p>
+                        <div className="icon-container" style={{display:"flex", marginLeft:"auto", marginRight:30}}>
                             <p style={{ fontSize: '40px', color: 'white', opacity: '0.5' }}>|</p>
                             <FaRegTrashAlt
                                 className="icon trash"
