@@ -44,8 +44,7 @@ const Dashboard = () => {
                 .then(() => {
                     setMetaCursos(value); // Actualizar estado local
                     setButtonVisible(false); // Ocultar botón después de guardar
-                    alert("Meta guardada correctamente.");
-                    window.location.reload(); // Recargar la página para reflejar los cambios
+                    alert("Meta guardada correctamente."); // Recargar la página para reflejar los cambios
                 })
                 .catch((error) => {
                     console.error("Error al guardar la meta:", error);
