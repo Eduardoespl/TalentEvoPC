@@ -2,38 +2,35 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config'; // Importa la instancia de Firestore y Auth
 
-interface Course {
-  id: string;
+interface MonthlyData {
   mes: string;
-  meta: number;
+  total: number;
 }
 
 const useCoursesData = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<MonthlyData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCoursesData = async () => {
-      setLoading(true);
-      try {
-        const querySnapshot = await getDocs(collection(db, 'completos'));
-        const coursesData = querySnapshot.docs.map(doc => {
-          const data = doc.data();
-          console.log("data grafica", data)
-          return {
-            id: doc.id,
-            mes: data.mes,
-            meta: data.meta,
-          } as Course;
-        });
-        setCourses(coursesData);
-      } catch (error) {
-        console.error("Error fetching courses data: ", error);
-      }
-      setLoading(false);
-    };
+      const fetchCoursesData = async () => {
+          setLoading(true);
+          try {
+              const querySnapshot = await getDocs(collection(db, 'completos'));
+              const monthlyData = querySnapshot.docs.map(doc => {
+                  const data = doc.data();
+                  return {
+                      mes: data.mes,
+                      total: data.cursos?.length || 0,
+                  };
+              });
+              setCourses(monthlyData);
+          } catch (error) {
+              console.error("Error fetching courses data: ", error);
+          }
+          setLoading(false);
+      };
 
-    fetchCoursesData();
+      fetchCoursesData();
   }, []);
 
   return { courses, loading };

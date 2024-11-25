@@ -11,7 +11,7 @@ const useCompletedCourses = () => {
         const fetchCompletedCourses = async () => {
             setLoading(true);
             try {
-                const q = query(collection(db, 'cursos'), where('completed', '==', true));
+                const q = query(collection(db, 'completos');
                 const querySnapshot = await getDocs(q);
                 setCompletedCourses(querySnapshot.size);
             } catch (error) {

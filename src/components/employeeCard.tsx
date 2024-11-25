@@ -13,7 +13,9 @@ const EmployeeCard = () => {
             try {
                 await deleteDoc(doc(db, "empleados", id));
                 alert("Empleado eliminado correctamente.");
-                // Aquí puedes actualizar la lista de empleados localmente si es necesario
+                
+                // Refresca la página para obtener la lista actualizada
+                window.location.reload();
             } catch (error) {
                 console.error("Error eliminando empleado:", error);
                 alert("Hubo un problema al eliminar el empleado.");

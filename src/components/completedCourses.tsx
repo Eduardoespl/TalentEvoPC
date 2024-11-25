@@ -1,14 +1,29 @@
-import useCompletedCourses from '../hooks/useCompletedCourses';
+import useCoursesData from '../hooks/useCoursesData';
 
-interface cardProps {
+interface CardProps {
     totalCourses: number;
 }
 
-const CompletedCourses = ({totalCourses}:cardProps) => {
-    const { completedCourses } = useCompletedCourses();
+const CompletedCourses = ({ totalCourses }: CardProps) => {
+    const { courses, loading } = useCoursesData();
 
-    function calculatePercentage(completedCourses: number) {
-        return ((completedCourses / totalCourses) * 100).toFixed(0);
+    // Obtener el mes actual en formato de texto completo (ej: "noviembre")
+    const currentMonth = new Date().toLocaleString('es-ES', { month: 'long' });
+
+    // Filtrar los cursos completados del mes actual
+    const currentMonthCourses = courses.filter(course => course.mes.toLowerCase() === currentMonth.toLowerCase());
+
+    // Sumar los cursos completados en el mes actual
+    const totalCompletedThisMonth = currentMonthCourses.reduce((sum, course) => sum + course.total, 0);
+
+    // Calcular el porcentaje de cursos completados en el mes actual
+    function calculatePercentage(completed: number) {
+        if (totalCourses === 0) return 0; // Evitar divisiones por 0
+        return ((completed / totalCourses) * 100).toFixed(0);
+    }
+
+    if (loading) {
+        return <p>Cargando datos...</p>;
     }
 
     return (
@@ -17,11 +32,11 @@ const CompletedCourses = ({totalCourses}:cardProps) => {
                 <h2 style={styles.title}>Cursos completos este mes</h2>
             </div>
             <div style={styles.wheelContainer}>
-                <p style={styles.text}>{calculatePercentage(completedCourses)} %</p>
+                <p style={styles.text}>{calculatePercentage(totalCompletedThisMonth)} %</p>
             </div>
         </div>
     );
-}
+};
 
 import { CSSProperties } from 'react';
 
@@ -65,7 +80,7 @@ const styles: { [key: string]: CSSProperties } = {
         alignItems: 'center',
         width: '50%',
         height: '100%',
-    }
+    },
 };
 
 export default CompletedCourses;

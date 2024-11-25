@@ -10,12 +10,14 @@ const VacancieCard = () => {
     const { vacantes, loading } = useVacantes();
     const [selectedVacancieId, setSelectedVacancieId] = useState<string | null>(null);
 
+    // Eliminar vacante
     const handleDelete = async (id: string) => {
         const confirm = window.confirm("¿Estás seguro de que deseas eliminar esta vacante?");
         if (confirm) {
             try {
                 await deleteDoc(doc(db, "vacantes", id));
                 alert("Vacante eliminada correctamente.");
+                window.location.reload(); // Recargar la página para reflejar los cambios
             } catch (error) {
                 console.error("Error eliminando vacante:", error);
                 alert("Hubo un problema al eliminar la vacante.");
@@ -23,6 +25,7 @@ const VacancieCard = () => {
         }
     };
 
+    // Alternar la visibilidad del formulario para asignar empleados
     const toggleSelectEmployee = (vacancieId: string) => {
         setSelectedVacancieId(selectedVacancieId === vacancieId ? null : vacancieId);
     };
@@ -49,7 +52,7 @@ const VacancieCard = () => {
                         </div>
                     </div>
                     {selectedVacancieId === vacante.id && (
-                        <SelectEmployee cursoId={vacante.curso} />
+                        <SelectEmployee cursoId={vacante.curso} vacancieId={vacante.id} /> // Pasar vacancieId también
                     )}
                 </div>
             ))}

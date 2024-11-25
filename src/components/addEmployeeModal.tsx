@@ -41,6 +41,7 @@ const AddEmployeeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
             await addDoc(collection(db, 'empleados'), nuevoEmpleado);
 
             alert('Empleado agregado exitosamente');
+            window.location.reload();
             onClose();
         } catch (error) {
             console.error('Error al agregar el empleado:', error);

@@ -5,18 +5,21 @@ import '../styles/modalStyles.css';
 
 const AddVacancieModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
     const [titulo, setTitulo] = useState('');
+    const [empleado] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const nuevaVacante = {
             titulo,
+            empleado,
         };
 
         try {
             await addDoc(collection(db, 'vacantes'), nuevaVacante);
 
             alert('Vacante agregada exitosamente');
+            window.location.reload();
             onClose();
         } catch (error) {
             console.error('Error al agregar la vacante:', error);
