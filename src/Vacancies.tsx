@@ -12,7 +12,7 @@ const Vacancies = () => {
     return (
         <>
             <button className="add-button" onClick={openModal}>
-                add vacancie
+                agregar vacante
             </button>
             <div className="list-container">
                 <VacancieCard />
