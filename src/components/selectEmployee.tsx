@@ -41,7 +41,6 @@ const SelectEmployee = ({ cursoId, vacancieId }: { cursoId: string, vacancieId: 
                     empleado: selectedEmployee // Asignar el empleado a la vacante
                 });
                 alert('Empleado asignado a la vacante correctamente.');
-                window.location.reload(); // Recargar la página para reflejar los cambios
             } catch (error) {
                 console.error('Error asignando empleado:', error);
                 alert('Hubo un problema al asignar el empleado.');

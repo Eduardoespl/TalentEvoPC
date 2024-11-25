@@ -15,7 +15,6 @@ const EmployeeCard = () => {
                 alert("Empleado eliminado correctamente.");
                 
                 // Refresca la página para obtener la lista actualizada
-                window.location.reload();
             } catch (error) {
                 console.error("Error eliminando empleado:", error);
                 alert("Hubo un problema al eliminar el empleado.");

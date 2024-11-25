@@ -5,10 +5,12 @@ import { db } from '../firebase/config'; // Importa la configuración de Firebas
 import { doc, deleteDoc } from 'firebase/firestore';
 import { useState } from 'react';
 import SelectEmployee from './selectEmployee';
+import { useNavigate } from 'react-router-dom';
 
 const VacancieCard = () => {
     const { vacantes, loading } = useVacantes();
     const [selectedVacancieId, setSelectedVacancieId] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     // Eliminar vacante
     const handleDelete = async (id: string) => {
@@ -17,7 +19,7 @@ const VacancieCard = () => {
             try {
                 await deleteDoc(doc(db, "vacantes", id));
                 alert("Vacante eliminada correctamente.");
-                window.location.reload(); // Recargar la página para reflejar los cambios
+                navigate("/main/vacancies");
             } catch (error) {
                 console.error("Error eliminando vacante:", error);
                 alert("Hubo un problema al eliminar la vacante.");

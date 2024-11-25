@@ -39,7 +39,6 @@ const AddVacancieModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
         try {
             await addDoc(collection(db, 'vacantes'), nuevaVacante); // Agregar la vacante a Firestore
             alert('Vacante agregada exitosamente');
-            window.location.reload();
             onClose();
         } catch (error) {
             console.error('Error al agregar la vacante:', error);
