@@ -59,8 +59,8 @@ const Dashboard = () => {
         <div className="dashboard-container">
             <div className="cards-container">
                 <DataCard number={totalEmployees} label="Empleados" icon={FaUserFriends} />
-                <DataCard number={totalCourses} label="Cursos" icon={FaPhotoVideo} />
-                <DataCard number={totalVacancies} label="Vacantes" icon={FaBriefcase} />
+                <DataCard number={totalCourses} label="Cursos" icon={FaPhotoVideo} details="Activos: 2"/>
+                <DataCard number={totalVacancies} label="Vacantes" icon={FaBriefcase} details="Cubiertas: 1"/>
             </div>
             <div className="courses-container">
                 <CompletedCourses totalCourses={metaCursos} />
