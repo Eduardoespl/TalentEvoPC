@@ -1,28 +1,38 @@
 import { useEffect, useState } from 'react';
-import { collection, getDocs, query } from 'firebase/firestore';
-import {db} from '../firebase/config';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 const useTotalCourses = () => {
     const [totalCourses, setTotalCourses] = useState(0);
+    const [activeCourses, setActiveCourses] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchTotalCourses = async () => {
+        const fetchCoursesData = async () => {
             setLoading(true);
             try {
-                const q = query(collection(db, 'cursos'));
-                const querySnapshot = await getDocs(q);
-                setTotalCourses(querySnapshot.size);
+                // Query to get all courses
+                const allCoursesQuery = query(collection(db, 'cursos'));
+                const allCoursesSnapshot = await getDocs(allCoursesQuery);
+                setTotalCourses(allCoursesSnapshot.size);
+
+                // Query to get only active courses (show: true)
+                const activeCoursesQuery = query(
+                    collection(db, 'cursos'),
+                    where('show', '==', true)
+                );
+                const activeCoursesSnapshot = await getDocs(activeCoursesQuery);
+                setActiveCourses(activeCoursesSnapshot.size);
             } catch (error) {
-                console.error("Error fetching total courses: ", error);
+                console.error("Error fetching courses data: ", error);
             }
             setLoading(false);
         };
 
-        fetchTotalCourses();
+        fetchCoursesData();
     }, []);
 
-    return { totalCourses, loading };
+    return { totalCourses, activeCourses, loading };
 };
 
 export default useTotalCourses;

@@ -4,11 +4,12 @@ import { IconType } from 'react-icons';
 interface cardProps {
     number: number;
     label: string;
-    details?: string;
+    details?: number;
+    extraInfo?: string;
     icon: IconType;
 }
 
-const DataCard = ({ number, label, icon:Icon, details }: cardProps) => {
+const DataCard = ({ number, label, icon:Icon, details, extraInfo }: cardProps) => {
     return (
         <div className='container'>
             <div>
@@ -17,7 +18,7 @@ const DataCard = ({ number, label, icon:Icon, details }: cardProps) => {
             </div>
             <div className='data'>
                 <h1>{number}</h1>
-                <p style={{fontSize:"15px"}}>{details}</p>
+                <p style={{fontSize:"15px"}}>{extraInfo}{details}</p>
             </div>
         </div>
     );

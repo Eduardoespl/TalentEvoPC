@@ -13,6 +13,8 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 const Dashboard = () => {
     const { totalEmployees } = useTotalEmployees();
     const { totalVacancies } = useTotalVacancies();
+    const { activeCourses } = useTotalCourses();
+    const { coveredVacancies } = useTotalVacancies();
     const { totalCourses } = useTotalCourses();
     const [metaCursos, setMetaCursos] = useState(0);
     const [buttonVisible, setButtonVisible] = useState(true);
@@ -59,8 +61,8 @@ const Dashboard = () => {
         <div className="dashboard-container">
             <div className="cards-container">
                 <DataCard number={totalEmployees} label="Empleados" icon={FaUserFriends} />
-                <DataCard number={totalCourses} label="Cursos" icon={FaPhotoVideo} details="Activos: 2"/>
-                <DataCard number={totalVacancies} label="Vacantes" icon={FaBriefcase} details="Cubiertas: 1"/>
+                <DataCard number={totalCourses} label="Cursos" icon={FaPhotoVideo} extraInfo="Activos: " details={activeCourses}/>
+                <DataCard number={totalVacancies} label="Vacantes" icon={FaBriefcase} extraInfo="Cubiertas: " details={coveredVacancies}/>
             </div>
             <div className="courses-container">
                 <CompletedCourses totalCourses={metaCursos} />
